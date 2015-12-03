@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<body>
+
+
+<div ng-app="myApp" ng-controller="Processando">
+
+<p ng-show="Processing">I am visible.
+
+<div id="Processando" style="display: none">
+<img src="/LocarWeb/imagens/Processing.gif">
+</div>
+
+
+</p>
+
+<button ng-click="BeBusy()">Hide user</button>
+
+</div>
+
+
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('Processando', function($scope) {
+
+    $scope.Processing = true;
+    $scope.BeBusy = function() {
+        $scope.Processing = !$scope.Processing;
+    };
+});
+</script> 
