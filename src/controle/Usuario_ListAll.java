@@ -14,62 +14,36 @@ import org.json.simple.JSONArray;
 
 import dominio.Usuario;
 import servico.ServicoFactory;
-
-/**
- * Servlet implementation class test
- */
-@WebServlet("/test")
-public class test extends HttpServlet {
+@WebServlet("/Usuario/ListAll")
+public class Usuario_ListAll extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public test() {
-        super();
-        // TODO Auto-generated constructor stub
+    public Usuario_ListAll() {
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
-		JSONArray usuarios = new JSONArray();
-		
-		
-     
+		response.setCharacterEncoding("UTF-8");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");        response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        response.setDateHeader("Expires", 0); // Proxies.
+
+		JSONArray json = new JSONArray();
+			 
 		List <Usuario>	lista = ServicoFactory.criarUsuarioServico().buscarTodos();	  		
 		for (Usuario x: lista){
 			LinkedHashMap obj = new LinkedHashMap();
 		
-			
-			
 			obj.put("codUsuario", x.getCodUsuario());   
 			obj.put("nome", x.getNome());
 			obj.put("cpf", x.getCpf());
 			obj.put("celular", x.getCelular());
 			obj.put("email", x.getEmail());
 			
-			
-			
-			
-		 
-			usuarios.add(obj);	
-			//usuarios.addAll(lista);
+			json.add(obj);	
 	}
 			
-	response.getWriter().append( usuarios.toJSONString());
+	response.getWriter().append( json.toJSONString());
 	
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

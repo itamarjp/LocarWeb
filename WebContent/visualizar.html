@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lista de Usuarios</title>
+<script src="/LocarWeb/includes/angular.min.js"></script>
+<link rel="stylesheet" href="/LocarWeb/includes/bootstrap-3.3.6-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/LocarWeb/includes/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css">
+<script src="/LocarWeb/includes/jquery.min.js"></script>
+<script src="/LocarWeb/includes/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script src="/LocarWeb/includes/bootbox.min.js"></script>
+<script src="/LocarWeb/includes/example.js"></script>
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+
+
+
+
+<div class="bs-example" ng-app="myApp" ng-controller="customersCtrl">
+  <div class="panel-heading"> <a href="cadastro.html">Cadastro de Usuario</a></div>
+  <div class="bb-alert alert alert-info" style="display:none;">
+        <span>The examples populate this alert with dummy content</span>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>e-Mail</th>	
+                <th>Excluir</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+			  <tr ng-repeat="x in names">
+			    <td>{{x.codUsuario}}</td>
+			    <td>{{ x.nome}}</td>
+			    <td><a ng-click="DeleteBox(x.codUsuario,$index)"> <span class="label label-danger">Excluir</span> </a></td>
+			    <td><a ng-click=""> <span class="label label-success">Editar</span> </a></td>
+			  </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+        $(function () {
+            Example.init({
+                "selector": ".bb-alert"
+            });
+        });
+</script>
+
+<script>
+
+var app = angular.module('myApp', []);
+app.controller('customersCtrl', function($scope, $http) {
+  $http.get("http://127.0.0.1:8080/LocarWeb/Usuario/ListAll")
+  .then(function (response) {$scope.names = response.data;});
+
+
+  $scope.DeleteBox =	 function DeleteBox(codigo,idx){
+	  bootbox.confirm("Confirma Remoção ?", function(result) {
+		  if(result){
+			  $scope.delete(codigo,idx);
+			  Example.show("Excluindo "+ $scope.names[idx].nome);
+
+		  }
+	  	}); 
+	  }
+
+$scope.delete =	 function ( codigo, idx ) {
+	$http.post('http://127.0.0.1:8080/LocarWeb/Usuario/Remove/' + codigo).success(function() {
+ 		$scope.names.splice(idx, 1);
+	  });
+	};
+
+}
+);
+
+</script>
+
+</body>
+</html>

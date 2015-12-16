@@ -1,50 +1,38 @@
 package controle;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dominio.Usuario;
-import servico.ServicoFactory;
-import servico.UsuarioServico;
-
 /**
- * Servlet implementation class Usuario_New
+ * Servlet implementation class xx
  */
-@WebServlet("/Usuario/New")
-public class Usuario_New extends HttpServlet {
+@WebServlet("/xx")
+public class xx extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Usuario_New() {
+    public xx() {
         super();
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.addHeader("Access-Control-Allow-Origin", "*");
-		UsuarioServico us = ServicoFactory.criarUsuarioServico();
-		
-		String nome = request.getParameter("nome");
-		String email = request.getParameter("email");
-		String senha = request.getParameter("senha");
-		
-        Usuario usr1 = new Usuario(null, nome,"000", "34-123", email,  senha);
-        us.inserirAtualizar(usr1);		
-		response.getWriter().append("OK");
-		System.out.println("OK");
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 
